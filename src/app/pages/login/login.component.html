@@ -1,38 +1,94 @@
-<!-- login.component.html -->
+<app-banner
+  [imgDesktop]="'assets/img/bannerGrande.png'"
+  [imgMobile]="'assets/img/banner-mobile.png'">
+</app-banner>
+
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-md-6 col-lg-5">
-      <div class="card shadow">
+      <div class="card shadow rounded-4">
         <div class="card-body p-4">
           <h2 class="text-center mb-4">Login</h2>
 
-          <form>
+          <form [formGroup]="loginForm" >
+
             <div class="mb-3">
-              <label for="username" class="form-label">Username</label>
-              <input type="text" class="form-control" id="username" placeholder="Enter your username" >
+
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input
+                type="email"
+                matInput
+                formControlName="email"
+                placeholder="Ex. usuario@example.com"
+                >
+
+                <mat-error *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">
+                  Por favor, insira um email válido
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+                  Email é <strong>orbigatório</strong>
+                </mat-error>
+
+              </mat-form-field>
+
             </div>
 
             <div class="mb-3">
-              <label for="password" class="form-label">Password</label>
-              <input type="password" class="form-control" id="password" placeholder="Enter your password"  >
-            </div>
 
-            <div class="d-flex justify-content-between mb-3">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="remember">
-                <label class="form-check-label" for="remember">Remember me</label>
-              </div>
-              <a href="#" class="text-decoration-none">Forgot password?</a>
+              <mat-form-field class="w-100" appearance="outline">
+
+                <mat-label>Senha</mat-label>
+
+                <input
+                [type]="hide"
+                matInput
+                formControlName="password"
+                placeholder="Senha"
+                >
+                <mat-icon matSuffix (click)="showPassword()">
+                  {{ hide ? 'visibility' : 'visibility_off' }}
+                </mat-icon>
+
+                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength') && !loginForm.get('password')?.hasError('required')">
+                  No mínimo 3 caracteres
+                </mat-error>
+
+                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                  Password é <strong>obrigatório</strong>
+                </mat-error>
+
+              </mat-form-field>
+
             </div>
 
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary" (click)="submit()" >Log In</button>
+
+              <button
+                mat-flat-button
+                type="submit"
+                class=""
+                (click)="submit()"
+                [disabled]="loginForm.invalid"
+                >
+                Log In
+              </button>
+
             </div>
 
-            <div class="text-center mt-3">
-              <p>Don't have an account? <a href="#" class="text-decoration-none">Sign up</a></p>
+            <div class="d-flex justify-content-between mt-3">
+
+              <p>Ainda não possui conta?
+                <a routerLink="/cadastro" class="text-decoration-none">Cadastre-se</a>
+              </p>
+              <a routerLink="/senhaMudanca" class="text-decoration-none">Esqueceu a senha?</a>
+
             </div>
+
           </form>
+
+          <p>pesquisar sobre como funciona login com google</p>
+
         </div>
       </div>
     </div>

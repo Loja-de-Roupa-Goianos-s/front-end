@@ -1,0 +1,25 @@
+.banner-img {
+  width: 100%;
+  height: 20rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  display: none;
+}
+
+.banner-img.desktop {
+  display: block;
+}
+
+.banner-img.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .banner-img.desktop {
+    display: none;
+  }
+  .banner-img.mobile {
+    display: block;
+  }
+}
+
