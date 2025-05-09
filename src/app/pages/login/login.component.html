@@ -43,18 +43,18 @@
                 <input
                 [type]="hide"
                 matInput
-                formControlName="password"
+                formControlName="senha"
                 placeholder="Senha"
                 >
                 <mat-icon matSuffix (click)="showPassword()">
                   {{ hide ? 'visibility' : 'visibility_off' }}
                 </mat-icon>
 
-                <mat-error *ngIf="loginForm.get('password')?.hasError('minlength') && !loginForm.get('password')?.hasError('required')">
+                <mat-error *ngIf="loginForm.get('senha')?.hasError('minlength') && !loginForm.get('senha')?.hasError('required')">
                   No mínimo 3 caracteres
                 </mat-error>
 
-                <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                <mat-error *ngIf="loginForm.get('senha')?.hasError('required')">
                   Password é <strong>obrigatório</strong>
                 </mat-error>
 

@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import {MatIconModule} from '@angular/material/icon';
 import { AutenticacaoService } from '../../core/services/autenticacao/autenticacao.service';
+import { UserService } from '../../core/services/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,19 @@ export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   route = inject(Router);
   authservice = inject(AutenticacaoService);
+  userService = inject(UserService);
   hide:string = 'password';
+  Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   ngOnInit() {
     this.createForm();
@@ -34,7 +47,7 @@ export class LoginComponent implements OnInit {
   createForm() {
     this.loginForm = new FormGroup({
       email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
-      password: new FormControl<string | null>(null, [Validators.required, Validators.minLength(3)])
+      senha: new FormControl<string | null>(null, [Validators.required, Validators.minLength(3)])
     });
   };
 
@@ -43,30 +56,19 @@ export class LoginComponent implements OnInit {
     if(this.loginForm.valid) {
 
       const email = this.loginForm.get('email')?.value;
-      const password = this.loginForm.get('password')?.value;
+      const password = this.loginForm.get('senha')?.value;
 
       this.authservice.autenticar(email, password).subscribe({
         next: (res) => {
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
+          console.log('Login response:', res);
+          this.Toast.fire({
             icon: "success",
             title: "Login realizado com sucesso!"
           });
-
-          this.route.navigate(['/home']);
         },
         error: (err) => {
-          console.log(err);
+
+          console.log('Resposta erro', err);
           Swal.fire({
             title: "Login falhou!",
             text: "Tente novamente!",
@@ -77,19 +79,7 @@ export class LoginComponent implements OnInit {
         }
 
       });
-
-
-    }else{
-
-        Swal.fire({
-          title: "Login falhou!",
-          text: "Tente novamente!",
-          icon: "error"
-        });
-
-        this.loginForm.reset();
-     };
-
+    };
   };
 
 

@@ -1,0 +1,258 @@
+<div class="container">
+  <div class="row justify-content-center mt-3">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow rounded-4" >
+        <div class="card-body p-4">
+          <h2 class="text-center mb-4">Cadastro</h2>
+
+          <form [formGroup]="cadastroForm" >
+
+              <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                <mat-label>Nome</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="nome"
+                  placeholder="Ex. João da Silva"
+                >
+                <button
+                 *ngIf="cadastroForm.get('nome')?.value"
+                 matSuffix
+                 mat-icon-button
+                 aria-label="Clear"
+                 (click)="cadastroForm.get('nome')?.reset()"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+
+                <mat-error *ngIf="hasFormError(cadastroForm,'nome','required')">
+                  Nome é <strong>obrigatório</strong>
+                </mat-error>
+              </mat-form-field>
+
+              <div class="d-flex flex-row justify-content-between">
+
+                <mat-form-field appearance="outline" class="w-75 h-auto" floatLabel="always">
+                  <mat-label>Data de nascimento</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="nascimento"
+                    placeholder="DD/MM/AAAA"
+                  >
+                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'nascimento','required')">
+                    Data de nascimento é <strong>obrigatório</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <div class="w-100 ms-3 d-flex flex-column">
+                  <mat-radio-group aria-label="Select an option"  formControlName="genero">
+                    <mat-label class="d-flex flex-column">Gênero</mat-label>
+                   <mat-radio-button value="feminino">Feiminino</mat-radio-button>
+                   <mat-radio-button value="masculino">Masculino</mat-radio-button>
+                   <mat-radio-button value="outro">Outro</mat-radio-button>
+                 </mat-radio-group>
+                </div>
+
+
+              </div>
+
+
+              <div class="d-flex flex-row justify-content-between gap-3 ">
+
+                <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                  <mat-label>CPF</mat-label>
+                  <input
+                  type="text"
+                  matInput
+                  formControlName="cpf"
+                  placeholder="12345678910"
+                  >
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'cpf','required')">
+                    CPF é <strong>obrigatório</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                  <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                    <mat-label>Telefone</mat-label>
+                    <input
+                    type="text"
+                    matInput
+                    formControlName="telefone"
+                    placeholder="+XX XXXXX-XXXX"
+                    >
+
+                    <mat-error *ngIf="hasFormError(cadastroForm,'telefone','required')">
+                      Telefone é <strong>obrigatório</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+              </div>
+
+              <div class="d-flex flex-row justify-content-between gap-3 ">
+
+                <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                  <mat-label>Cidade</mat-label>
+                  <input
+                  type="text"
+                  matInput
+                  formControlName="cidade"
+                  placeholder="Ex.: Goiânia"
+                  >
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'cidade','required')">
+                    Cidade é <strong>obrigatório</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                  <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                    <mat-label>Estado</mat-label>
+                    <mat-select
+                    formControlName="estado"
+                    placeholder="Selecione o estado"
+                    >
+                      <mat-option value="" selected></mat-option>
+                      <mat-option *ngFor="let estado of estados" [value]="estado">
+                        {{ estado.nome }}
+                      </mat-option>
+                    </mat-select>
+
+                    <mat-error *ngIf="hasFormError(cadastroForm,'estado','required')">
+                      Estado é <strong>obrigatório</strong>
+                    </mat-error>
+                  </mat-form-field>
+
+              </div>
+
+              <div class="d-flex flex-row justify-content-between gap-3 ">
+
+                <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                  <mat-label>Email</mat-label>
+                  <input
+                    type="email"
+                    matInput
+                    formControlName="email"
+                    placeholder="Ex. usuario@example.com"
+                  >
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'email','email') && !hasFormError(cadastroForm,'email','required')">
+                    Por favor, insira um email válido
+                  </mat-error>
+                  <mat-error *ngIf="hasFormError(cadastroForm,'email','required')">
+                    Email é <strong>orbigatório</strong>
+                  </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+                  <mat-label>Confirmar Email</mat-label>
+                  <input
+                    type="email"
+                    matInput
+                    formControlName="confirmarEmail"
+                    placeholder="Ex. usuario@example.com"
+                  >
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'confirmarEmail','email')  && !hasFormError(cadastroForm,'confirmarEmail','required')">
+                    Por favor, insira um email válido
+                  </mat-error>
+                  <mat-error *ngIf="hasFormError(cadastroForm,'confirmarEmail','required')">
+                    Email é <strong>orbigatório</strong>
+                  </mat-error>
+
+                </mat-form-field>
+
+              </div>
+
+              <div class="d-flex flex-row justify-content-between gap-3 ">
+
+                <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+
+                  <mat-label>Senha</mat-label>
+
+                  <input
+                    [type]="hide"
+                    matInput
+                    formControlName="senha"
+                    placeholder="Senha"
+                  >
+                  <mat-icon matSuffix (click)="showPassword()">
+                    {{ hide ? 'visibility' : 'visibility_off' }}
+                  </mat-icon>
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'senha','minlength') && !hasFormError(cadastroForm,'senha','required')">
+                    No mínimo 3 caracteres
+                  </mat-error>
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'senha','required')">
+                    senha é <strong>obrigatório</strong>
+                  </mat-error>
+
+                </mat-form-field>
+
+                <mat-form-field class="w-100" appearance="outline" floatLabel="always">
+
+                  <mat-label>Confirmar Senha</mat-label>
+
+                  <input
+                    [type]="hide"
+                    matInput
+                    formControlName="confirmarSenha"
+                    placeholder="Confirmar Senha"
+                  >
+                  <mat-icon matSuffix (click)="showPassword()">
+                    {{ hide ? 'visibility' : 'visibility_off' }}
+                  </mat-icon>
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'confirmarSenha','minlength') && !hasFormError(cadastroForm,'confirmarSenha','required')">
+                    No mínimo 3 caracteres
+                  </mat-error>
+
+                  <mat-error *ngIf="hasFormError(cadastroForm,'confirmarSenha','required')">
+                    Confirmar Senha é <strong>obrigatório</strong>
+                  </mat-error>
+
+                </mat-form-field>
+
+              </div>
+
+            <div class="mb-3">
+
+              <mat-checkbox
+                formControlName="aceitarTermos"
+                color="primary"
+              >
+              Li e aceito os termos e condições deste cadastro.
+              </mat-checkbox>
+
+              <mat-error *ngIf="hasFormError(cadastroForm,'aceitarTermos','required')">
+                Você precisa aceitar os termos e condições para efetuar o cadastro
+              </mat-error>
+
+            </div>
+
+            <div class="d-grid">
+
+              <button
+                mat-flat-button
+                type="submit"
+                class=""
+                (click)="submit()"
+                [disabled]="cadastroForm.invalid"
+                >
+                Criar Minha Conta
+              </button>
+
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
