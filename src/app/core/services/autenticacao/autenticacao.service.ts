@@ -3,8 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { AuthResponse } from '../../../shared/types/user';
 
+interface AuthResponse {
+    access_token: string;
+  }
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +20,7 @@ export class AutenticacaoService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`,
            { email, senha },
            {observe:'response'}).pipe(tap((response) => {
-                const authtoken = response.body?.acess_token || '';
+                const authtoken = response.body?.access_token || '';
                 this.userService.salvarToken(authtoken);
              })
            )

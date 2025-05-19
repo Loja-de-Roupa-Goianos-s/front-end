@@ -2,3 +2,14 @@
 
 
 
+<p>Bem vindo! {{nome}}</p>
+
+
+<button *ngIf="user$ | async as User, else login" (click)="deslogar()" >DESLOGAR</button>
+
+<ng-template #login >
+
+  <button routerLink="/cadastrar" >CADASTRO</button>
+  <button routerLink="/login" >LOGAR</button>
+
+</ng-template>

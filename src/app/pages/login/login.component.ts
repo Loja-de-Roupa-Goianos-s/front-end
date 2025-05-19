@@ -61,21 +61,23 @@ export class LoginComponent implements OnInit {
       this.authservice.autenticar(email, password).subscribe({
         next: (res) => {
           console.log('Login response:', res);
+
           this.Toast.fire({
             icon: "success",
             title: "Login realizado com sucesso!"
           });
+
+          this.route.navigateByUrl('/home');
+          this.loginForm.reset();
         },
         error: (err) => {
 
-          console.log('Resposta erro', err);
           Swal.fire({
             title: "Login falhou!",
             text: "Tente novamente!",
             icon: "error"
           });
 
-          this.loginForm.reset();
         }
 
       });

@@ -13,6 +13,4 @@ export interface User {
     confirmarEmail?:string,
     confirmarPassword?:string
   }
-  export interface AuthResponse {
-    acess_token: string;
-  }
+
