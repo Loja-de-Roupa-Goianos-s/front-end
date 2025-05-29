@@ -13,11 +13,8 @@ export class CadastroService {
   http = inject(HttpClient);
 
   setCadastro(form:User):Observable<User>{
-    return this.http.post<User>(`${this.apiUrl}/auth/cadastro`, form);
+    return this.http.post<User>(`${this.apiUrl}/auth/registro`, form);
   }
 
-  buscarCadastro(): Observable<User>{
-    return this.http.get<User>(`${this.apiUrl}/auth/perfil`);
-  }
 
 };
